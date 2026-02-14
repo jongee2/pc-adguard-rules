@@ -1,0 +1,39 @@
+! ----- PEACOCK ULTIMATE AGGRESSIVE BLOCK LIST v2.0 (Stable) -----
+! Purpose: Aggressively block Peacock ad shards and ad tech while preserving VOD and live playback.
+! Use: Import into AdGuard -> Filters -> User rules (or paste into User rules).
+
+! === PRIMARY BLOCK ===
+! Block Peacock CDN shards used for content/ad segments (VOD ad shards)
+# Anchored regex — matches hosts like g002-vod-us-cmaf-prd-ak.cdn.peacocktv.com
+# New Rule Testing
+/^g\d{1,4}-(vod|sf|sle)-us-cmaf-prd-(cf|cc|sf|ph|dc|at|ak)(-[a-z0-9-]+)?\.cdn\.peacocktv\.com$/
+
+! === SECONDARY BLOCK ===
+! Block NETSKRT ad-segment CDN (most variants)
+! === SPECIAL NS-EXCEPTION (netskrt) ===
+! Allow only the "-ns" netskrt hosts which appear necessary for live streams
+@@/^g\d{1,4}-[a-z0-9]+-us-cmaf-prd-ns\.prd\.pck\.netskrt\.net$/
+# Anchored regex for prd.pck.netskrt.net hosts
+/^g\d{1,4}-[a-z0-9]+-us-cmaf-prd-[a-z0-9-]+\.prd\.pck\.netskrt\.net$/
+
+
+! === TERTIARY BLOCK / AD-TECH / TELEMETRY (high priority) ===
+||time.akamai.com^$important
+||video-ads-module.ad-tech.nbcuni.com^$important
+||identity.mparticle.com^$important
+||nbcstreaming.hb-api.omtrdc.net^$important
+||s.adex2.fwmrm.net^$important
+||adex2.fwmrm.net^$important
+||*.v.fwmrm.net^$important
+||29773.v.fwmrm.net^$important
+||s.fwmrm.net^$important
+
+! === ALLOWLISTS (preserve live / session continuity) ===
+! Allow Adobe DTM loader (required for some TV clients' runtime bootstrap)
+@@||assets.adobedtm.com^
+! Allow ingest/session heartbeat used by live streams
+@@||ingest.webcol.sdp.peacocktv.com^
+! Allow OVP / player backend endpoints
+@@||play.ovp.peacocktv.com^
+@@||ovp.peacocktv.com^
+@@||play.clients.peacocktv.com^
