@@ -6,7 +6,6 @@
 ! Block Peacock CDN shards used for content/ad segments (VOD ad shards)
 # Anchored regex — matches hosts like g002-vod-us-cmaf-prd-ak.cdn.peacocktv.com
 # New Rule Testing
-/^g\d{1,4}-(vod|sf|sle)-us-cmaf-prd-(cf|cc|sf|ph|dc|at|ak)(-[a-z0-9-]+)?\.cdn\.peacocktv\.com$/
 
 ! === SECONDARY BLOCK ===
 ! Block NETSKRT ad-segment CDN (most variants)
